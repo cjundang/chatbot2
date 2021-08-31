@@ -19,7 +19,6 @@
 	if($recv_msg == "Toi") {
 		$rep_msg['text'] = "OK, Hello Toi";
 		$rep_msg['type']='text';
-
 	}else if($recv_msg == "อยู่ไหน"){
 		$rep_msg['title']='My HOme';
 		$rep_msg['address']='1-6-1 Yotsuya, Shinjuku-ku, Tokyo, 160-0004, Japan';
