@@ -14,18 +14,27 @@
 
 	$messages = [];
 	$messages['replyToken'] = $replyToken;
+	$rep_msg = [];
 
 	if($recv_msg == "Toi") {
-		$rep_msg = "OK, Hello Toi";
-		$reply_type = "text";
-	}else{
-		$rep_msg = "https://i.imgur.com/ObxhSgt.png";
-		$reply_type = "image";
+		$rep_msg['text'] = "OK, Hello Toi";
+		$rep_msg['type']='text';
+
+	}else if($recv_msg == "อยู่ไหน"){
+		$rep_msg['title']='My HOme';
+		$rep_msg['address']='1-6-1 Yotsuya, Shinjuku-ku, Tokyo, 160-0004, Japan';
+		$rep_msg['latitude']= 35.687574;
+		$rep_msg['longitude']= 139.72922;
+		$rep_msg['type']='location';
+	}
+	else{
+		$rep_msg['originalContentUrl'] = "https://i.imgur.com/ObxhSgt.png";
+		$rep_msg['previewImageUrl'] = "https://i.imgur.com/ObxhSgt.png";
+		$rep_msg['type']='image';
 	}
 		
 
-	$messages['messages'][0] = getFormatTextMessage($rep_msg, $reply_type);
-	$messages['messages'][1] = getFormatTextMessage($rep_msg, $reply_type);
+	$messages['messages'][0] =  $rep_msg;
 
 	$encodeJson = json_encode($messages);
 
@@ -36,20 +45,6 @@
 	/*Return HTTP Request 200*/
 	http_response_code(200);
 
-	function getFormatTextMessage($text, $type)
-	{
-		$datas = [];
-		if($type == "text"){
-			$datas['type'] = 'text';
-			$datas['text'] = $text;		
-		}
-		if($type == "image"){
-			$datas['type'] = 'image';
-			$datas['originalContentUrl'] = $text;	
-			$datas['previewImageUrl'] = $text;	
-		}
-		return $datas;
-	}
 
 	function sentMessage($encodeJson,$datas)
 	{
