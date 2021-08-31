@@ -25,6 +25,7 @@
 		
 
 	$messages['messages'][0] = getFormatTextMessage($rep_msg, $reply_type);
+	$messages['messages'][1] = getFormatTextMessage($rep_msg, $reply_type);
 
 	$encodeJson = json_encode($messages);
 
