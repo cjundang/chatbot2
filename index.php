@@ -10,31 +10,43 @@
 	$replyToken = $deCode['events'][0]['replyToken'];
 	$recv_msg = $deCode['events'][0]['message']['text'];
 
-	$rep_msg = "I don't know what you say";
-	if($recv_msg == "Toi") 
-		$rep_msg = "OK, Hello Toi";
-
 
 
 	$messages = [];
 	$messages['replyToken'] = $replyToken;
-	$messages['messages'][0] = getFormatTextMessage($rep_msg);
+
+	if($recv_msg == "Toi") {
+		$rep_msg = "OK, Hello Toi";
+		$reply_type = "text";
+	}else{
+		$rep_msg = "https://i.imgur.com/ObxhSgt.png";
+		$reply_type = "image";
+	}
+		
+
+	$messages['messages'][0] = getFormatTextMessage($rep_msg, $reply_type);
 
 	$encodeJson = json_encode($messages);
 
 	$LINEDatas['url'] = "https://api.line.me/v2/bot/message/reply";
- $LINEDatas['token'] = "1WXhWz3PtaV5ZjkMkZJFL15BvPJGcZesK+51a+K75Klua+yb2BEXpiSsL+eBMDcC2ygdIdegLR4CLihRsOZhcAGsdp92ui0HtDTKQ/JdYOEEu6YtEbEIj5X8+vTpd4RGZhH2Ke7GbLeBV01NFWl1+QdB04t89/1O/w1cDnyilFU=";
+ 	$LINEDatas['token'] = "1WXhWz3PtaV5ZjkMkZJFL15BvPJGcZesK+51a+K75Klua+yb2BEXpiSsL+eBMDcC2ygdIdegLR4CLihRsOZhcAGsdp92ui0HtDTKQ/JdYOEEu6YtEbEIj5X8+vTpd4RGZhH2Ke7GbLeBV01NFWl1+QdB04t89/1O/w1cDnyilFU=";
   	$results = sentMessage($encodeJson,$LINEDatas);
 
 	/*Return HTTP Request 200*/
 	http_response_code(200);
 
-	function getFormatTextMessage($text)
+	function getFormatTextMessage($text, $type)
 	{
 		$datas = [];
-		$datas['type'] = 'text';
-		$datas['text'] = $text;
-
+		if($type == "text"){
+			$datas['type'] = 'text';
+			$datas['text'] = $text;		
+		}
+		if($type == "image"){
+			$datas['type'] = 'image';
+			$datas['originalContentUrl'] = $text;	
+			$datas['previewImageUrl'] = $text;	
+		}
 		return $datas;
 	}
 
