@@ -19,7 +19,7 @@
 	if($recv_msg == "Toi") {
 		$url = "http://api.thingspeak.com/channels/1486243/feeds.json?results=1";
 		$result = file_get_contents($url);
-		$rep_msg['text'] = json_decode($result);
+		$rep_msg['text'] = $result;
 		$rep_msg['type']='text';
 	}else if($recv_msg == "อยู่ไหน"){
 		$rep_msg['title']='My HOme';
